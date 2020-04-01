@@ -123,9 +123,8 @@ class MainGUI(gtk.Window):
         ExportGUI(self)
         print("Export complete!")
         self.hide_all()
-        print("Ran hide_all.")
-        # pid = os.getpid()
-        # os.kill(pid, signal.SIGSTOP)
+        pid = os.getpid()
+        os.kill(pid, signal.SIGSTOP)
         # self.show_gui() # this line added to show GUI @ start DEBUG ONLY -- AF
 
     def configure_collectors(self, event):
@@ -182,6 +181,8 @@ class MainGUI(gtk.Window):
         self.startall_button.set_sensitive(False)
         self.stopall_button.set_sensitive(True)
         i = 0.0
+
+        # Kevin added
         # pb = ProgressBarDetails()
         # pb.setValue(0.0)
 
@@ -191,6 +192,8 @@ class MainGUI(gtk.Window):
         for collector in self.engine.collectors:
             if collector.is_enabled() and isinstance(collector, engine.collector.AutomaticCollector):
                 collector.run()
+            
+            # Kevin added
             # pb.setValue(i / len(self.engine.collectors))
             # pb.appendText("processing "+collector.name)
 
@@ -198,8 +201,10 @@ class MainGUI(gtk.Window):
             while gtk.events_pending():
                 gtk.main_iteration()
             i += 1
+        # Kevin added
         # pb.setValue(1.0)
 
+        # Kevin added
         # if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
             # pb.destroy()
 
@@ -210,6 +215,8 @@ class MainGUI(gtk.Window):
         self.stopall_button.set_sensitive(False)
         self.startall_button.set_sensitive(True)
         i = 0.0
+        
+        # Kevin added
         # pb = ProgressBarDetails()
         # pb.setValue(0.0)
 
@@ -219,13 +226,19 @@ class MainGUI(gtk.Window):
         for collector in self.engine.collectors:
             if collector.is_enabled() and isinstance(collector, engine.collector.AutomaticCollector):
                collector.terminate()
+            
+            # Kevin added
             # pb.setValue(i/len(self.engine.collectors))
             # pb.appendText("stopping "+collector.name)
+            
             while gtk.events_pending():
                 gtk.main_iteration()
             i += 1
+        
+        # Kevin added
         # pb.setValue(1.0)
 
+        # Kevin added
         # if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
             # pb.destroy()
 
