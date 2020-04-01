@@ -116,9 +116,7 @@ class MainGUI(gtk.Window):
         self.startall_collectors()
         interval = 5
         while interval > 0:
-            print(interval)
             interval-=1
-            # time.sleep(2)
         self.stopall_collectors()
         ExportGUI(self)
         print("Export complete!")
