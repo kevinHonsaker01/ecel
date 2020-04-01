@@ -79,7 +79,8 @@ class ExportGUI(gtk.Window):
 
         self.add(vbox)
 
-        self.show_all()
+        self.export()
+        # self.show_all()
 
     def on_key_release(self, widget, event):
         keyname = gtk.gdk.keyval_name(event.keyval)
@@ -111,11 +112,13 @@ class ExportGUI(gtk.Window):
     def close_export_dialog(self, event):
         self.hide_all()
 
-    def export(self, event):
-        export_base_dir = self.entry_selected_folder.get_text()
+    def export(self):#(self, event):
+        # export_base_dir = self.entry_selected_folder.get_text()
+        export_base_dir = os.getcwd()
         export_raw = self.checkbutton_export_raw.get_active()
         export_compressed = self.checkbutton_export_compressed.get_active()
         export_parsed = self.checkbutton_export_parsed.get_active()
+
 
         if not export_base_dir:
             utils.gui.show_error_message(self, "Please select a directory to export to.")
@@ -181,6 +184,6 @@ class ExportGUI(gtk.Window):
         if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
             pb.destroy()
 
-        utils.gui.show_alert_message(self, "Export complete")
+        # utils.gui.show_alert_message(self, "Export complete")
 
         self.hide_all()
