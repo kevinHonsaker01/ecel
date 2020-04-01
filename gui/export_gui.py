@@ -116,7 +116,9 @@ class ExportGUI(gtk.Window):
 
         # Kevin added
         # export_base_dir = self.entry_selected_folder.get_text()
-        export_base_dir = os.getcwd()
+        export_base_dir = os.getcwd()+'/ecel_data'
+        if not os.path.exists(export_base_dir):
+            os.makedirs(os.getcwd()+'/ecel_data')
         # Kevin added
 
         export_raw = self.checkbutton_export_raw.get_active()
@@ -142,6 +144,7 @@ class ExportGUI(gtk.Window):
         os.makedirs(export_raw_dir)
         os.makedirs(export_compressed_dir)
         os.makedirs(export_parsed_dir)
+
 
         progress = 0
 
