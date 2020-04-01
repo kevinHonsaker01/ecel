@@ -1,5 +1,5 @@
 import gtk
-import os
+import os, sys, signal
 import subprocess
 import definitions
 import status_icon
@@ -110,8 +110,23 @@ class MainGUI(gtk.Window):
         #self.show_all()
 
         self.status_context_menu = status_icon.CustomSystemTrayIcon(app_engine, self)
-        
-        self.show_gui() # this line added to show GUI @ start DEBUG ONLY -- AF
+
+        # Added for collectors AMED
+        # export dir is in export_gui.py
+        self.startall_collectors()
+        interval = 5
+        while interval > 0:
+            print(interval)
+            interval-=1
+            # time.sleep(2)
+        self.stopall_collectors()
+        ExportGUI(self)
+        print("Export complete!")
+        self.hide_all()
+        print("Ran hide_all.")
+        # pid = os.getpid()
+        # os.kill(pid, signal.SIGSTOP)
+        # self.show_gui() # this line added to show GUI @ start DEBUG ONLY -- AF
 
     def configure_collectors(self, event):
         PluginConfigGUI(self, self.engine.collectors)
@@ -160,15 +175,15 @@ class MainGUI(gtk.Window):
 
         return frame
 
-    def startall_collectors(self, button):
+    def startall_collectors(self): #, button):
         self.status_context_menu.tray_ind.set_icon(gtk.STOCK_MEDIA_RECORD)
         self.status_context_menu.startall_menu_item.set_sensitive(False)
         self.status_context_menu.stopall_menu_item.set_sensitive(True)
         self.startall_button.set_sensitive(False)
         self.stopall_button.set_sensitive(True)
         i = 0.0
-        pb = ProgressBarDetails()
-        pb.setValue(0.0)
+        # pb = ProgressBarDetails()
+        # pb.setValue(0.0)
 
         while gtk.events_pending():
             gtk.main_iteration()
@@ -176,27 +191,27 @@ class MainGUI(gtk.Window):
         for collector in self.engine.collectors:
             if collector.is_enabled() and isinstance(collector, engine.collector.AutomaticCollector):
                 collector.run()
-            pb.setValue(i / len(self.engine.collectors))
-            pb.appendText("processing "+collector.name)
+            # pb.setValue(i / len(self.engine.collectors))
+            # pb.appendText("processing "+collector.name)
 
-            pb.pbar.set_text("Starting " + collector.name)
+            # pb.pbar.set_text("Starting " + collector.name)
             while gtk.events_pending():
                 gtk.main_iteration()
             i += 1
-        pb.setValue(1.0)
+        # pb.setValue(1.0)
 
-        if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
-            pb.destroy()
+        # if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
+            # pb.destroy()
 
-    def stopall_collectors(self, button):
+    def stopall_collectors(self): #, button):
         self.status_context_menu.tray_ind.set_icon(gtk.STOCK_NO)
         self.status_context_menu.stopall_menu_item.set_sensitive(False)
         self.status_context_menu.startall_menu_item.set_sensitive(True)
         self.stopall_button.set_sensitive(False)
         self.startall_button.set_sensitive(True)
         i = 0.0
-        pb = ProgressBarDetails()
-        pb.setValue(0.0)
+        # pb = ProgressBarDetails()
+        # pb.setValue(0.0)
 
         while gtk.events_pending():
             gtk.main_iteration()
@@ -204,15 +219,15 @@ class MainGUI(gtk.Window):
         for collector in self.engine.collectors:
             if collector.is_enabled() and isinstance(collector, engine.collector.AutomaticCollector):
                collector.terminate()
-            pb.setValue(i/len(self.engine.collectors))
-            pb.appendText("stopping "+collector.name)
+            # pb.setValue(i/len(self.engine.collectors))
+            # pb.appendText("stopping "+collector.name)
             while gtk.events_pending():
                 gtk.main_iteration()
             i += 1
-        pb.setValue(1.0)
+        # pb.setValue(1.0)
 
-        if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
-            pb.destroy()
+        # if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
+            # pb.destroy()
 
     def call_dss_module(self, event, collectors):
         DssGUI(self, collectors)
