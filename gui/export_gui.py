@@ -113,8 +113,12 @@ class ExportGUI(gtk.Window):
         self.hide_all()
 
     def export(self):#(self, event):
+
+        # Kevin added
         # export_base_dir = self.entry_selected_folder.get_text()
         export_base_dir = os.getcwd()
+        # Kevin added
+
         export_raw = self.checkbutton_export_raw.get_active()
         export_compressed = self.checkbutton_export_compressed.get_active()
         export_parsed = self.checkbutton_export_parsed.get_active()
@@ -140,7 +144,9 @@ class ExportGUI(gtk.Window):
         os.makedirs(export_parsed_dir)
 
         progress = 0
-        pb = ProgressBar()
+
+        # Kevin added
+        # pb = ProgressBar()
         while gtk.events_pending():
             gtk.main_iteration()
 
@@ -159,8 +165,11 @@ class ExportGUI(gtk.Window):
                 shutil.copytree(plugin_collector_compressed_dir, plugin_export_compressed_dir)
             if export_parsed and os.path.exists(plugin_collector_parsed_dir) and os.listdir(plugin_collector_parsed_dir):
                 shutil.copytree(plugin_collector_parsed_dir, plugin_export_parsed_dir)
-            pb.setValue((progress / len(next(os.walk(self.collectors_dir))[1]))*.8)
-            pb.pbar.set_text("Copying files " + plugin)
+            
+            # Kevin added
+            # pb.setValue((progress / len(next(os.walk(self.collectors_dir))[1]))*.8)
+            # pb.pbar.set_text("Copying files " + plugin)
+            
             while gtk.events_pending():
                 gtk.main_iteration()
             progress += 1
@@ -168,21 +177,29 @@ class ExportGUI(gtk.Window):
         if self.checkbutton_compress_export.get_active():
             export_dir_notime = os.path.join(export_base_dir, definitions.PLUGIN_COLLECTORS_EXPORT_DIRNAME.replace(
                 definitions.TIMESTAMP_PLACEHOLDER, ""))
-            pb.pbar.set_text("Compressing data to " + export_dir)
-            pb.setValue(.85)
+            
+            # Kevin added
+            # pb.pbar.set_text("Compressing data to " + export_dir)
+            # pb.setValue(.85)
+
             while gtk.events_pending():
                 gtk.main_iteration()
             if self.radiobutton_compress_export_format_zip.get_active():
                 zip(export_dir, export_dir_notime)
             elif self.radiobutton_compress_export_format_tar.get_active():
                 tar(export_dir, export_dir_notime)
-            pb.pbar.set_text("Cleaning up " + export_dir)
-            pb.setValue(.9)
+            
+            # Kevin added
+            # pb.pbar.set_text("Cleaning up " + export_dir)
+            # pb.setValue(.9)
+            
             while gtk.events_pending():
                 gtk.main_iteration()
             shutil.rmtree(export_dir)
-        if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
-            pb.destroy()
+        
+        # Kevin added
+        # if not pb.emit("delete-event", gtk.gdk.Event(gtk.gdk.DELETE)):
+            # pb.destroy()
 
         # utils.gui.show_alert_message(self, "Export complete")
 
