@@ -114,9 +114,9 @@ class MainGUI(gtk.Window):
         # Added for collectors AMED
         # export dir is in export_gui.py
         self.startall_collectors()
-        interval = 5
-        while interval > 0:
-            interval-=1
+        interval = 120
+        print("Collecting for %d seconds." % interval)
+        time.sleep(interval)
         self.stopall_collectors()
         ExportGUI(self)
         print("Export complete!")
