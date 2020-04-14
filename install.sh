@@ -53,9 +53,9 @@ echo "$OUTPUT_PREFIX Installing python dependencies"
 python -m pip install pip --upgrade
 python -m pip install $REQUIRED_PYTHON_PACKAGES
 
-if prompt_accepted_Yn "Snoopy logs all system calls. ECEL will still run without it, but the snoopy plugin will not work. Install? "; then
-    bash "$ECEL_DIR"/scripts/install-snoopy.sh
-fi
+#if prompt_accepted_Yn "Snoopy logs all system calls. ECEL will still run without it, but the snoopy plugin will not work. Install? "; then
+bash "$ECEL_DIR"/scripts/install-snoopy.sh
+#fi
 
 ### Create plugin configs
 # #TODO: do this every time it's necessary
@@ -97,13 +97,13 @@ cat > "$ECEL_DIR"/ecel-gui <<-'EOFecelgui'
 EOFecelgui
 chmod +x "$ECEL_DIR"/ecel-gui
 
-if prompt_accepted_Yn "The Top-Icons gnome extension will place the ECEL icon in your status bar. Install?"; then
-    bash "$ECEL_DIR"/scripts/gnome-shell-extensions-installer/gnome-shell-extension-installer 495 --restart-shell --yes
-fi
+#if prompt_accepted_Yn "The Top-Icons gnome extension will place the ECEL icon in your status bar. Install?"; then
+bash "$ECEL_DIR"/scripts/gnome-shell-extensions-installer/gnome-shell-extension-installer 495 --restart-shell --yes
+#fi
 
 ### Configure to run on boot
 #
-if prompt_accepted_Yn "Would you like to run ECEL automatically on login (only works on Kali 2016.2+)?"; then
+#if prompt_accepted_Yn "Would you like to run ECEL automatically on login (only works on Kali 2016.2+)?"; then
 cat > "$ECEL_DIR"/scripts/ecel.desktop << EOF
 [Desktop Entry]
 Name=ECEL
@@ -115,13 +115,13 @@ Type=Application
 X-GNOME-Autostart-enabled=true
 
 EOF
-	AUTOSTART_DIR=~/.config/autostart/
-    if [ ! -d "$AUTOSTART_DIR" ]; then
-		mkdir "$AUTOSTART_DIR"
-	fi
-    cp "$ECEL_DIR"/scripts/ecel.desktop "$AUTOSTART_DIR"
-    chmod +x "$AUTOSTART_DIR"/ecel.desktop 
+AUTOSTART_DIR=~/.config/autostart/
+if [ ! -d "$AUTOSTART_DIR" ]; then
+	mkdir "$AUTOSTART_DIR"
 fi
+cp "$ECEL_DIR"/scripts/ecel.desktop "$AUTOSTART_DIR"
+chmod +x "$AUTOSTART_DIR"/ecel.desktop 
+#fi
 
 echo "$OUTPUT_PREFIX Installation Complete"
 
