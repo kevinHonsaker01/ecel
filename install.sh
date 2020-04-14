@@ -23,6 +23,9 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+### Stop all interactive prompts | added by KMH ###
+echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
+
 ### Install dependencies
 #
 REQUIRED_PROGRAMS="openjdk-8-jdk zlib1g-dev libpng-dev libxtst-dev python-gtk2 python-tk python-psutil python-pip python-xlib python-dpkt python-appindicator"
@@ -38,7 +41,7 @@ done
 
 echo "$OUTPUT_PREFIX Installing dependecies"
 if [ -x "/usr/bin/apt-get" ]; then
-    apt-get -y install $REQUIRED_PROGRAMS
+    DEBIAN_FRONTED=noninteractive apt-get -y install $REQUIRED_PROGRAMS # orginal: apt-get -y install $REQUIRED_PROGRAMS
 elif [ -x "/usr/bin/yum" ]; then
     yum install -y $REQUIRED_PROGRAMS
 else
