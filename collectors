@@ -8,6 +8,6 @@ fi
 cd "${ECEL_HOME}"
 python start_stop_collectors.py &
 sleep 15
-kill -9 $(ps aux | grep start_stop_collectors | grep python | cud -d" " -f7)
+kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7)
 python3 hailCesar.py
 exit 0
