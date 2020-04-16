@@ -110,7 +110,10 @@ class MainGUI(gtk.Window):
         #self.show_all()
 
         self.status_context_menu = status_icon.CustomSystemTrayIcon(app_engine, self)
-
+ 
+        # Clear previous data
+        self.delete_all()
+        
         # Added for collectors AMED
         # export dir is in export_gui.py
         self.startall_collectors()
@@ -118,11 +121,14 @@ class MainGUI(gtk.Window):
         print("Collecting for %d seconds." % interval)
         time.sleep(interval)
         self.stopall_collectors()
+        
+        # Export data
         ExportGUI(self)
         print("Export complete!")
+        
+        # Delete data collected
+        self.delete_all()
         self.hide_all()
-        pid = os.getpid()
-        os.kill(pid, signal.SIGSTOP)
         # self.show_gui() # this line added to show GUI @ start DEBUG ONLY -- AF
 
     def configure_collectors(self, event):
@@ -135,10 +141,10 @@ class MainGUI(gtk.Window):
     def export_all(self, event):
         ExportGUI(self)
 
-    def delete_all(self, event):
-        if self.show_confirmation_dialog("Are you sure you want to delete all collector data (this cannot be undone)?"):
-            remove_cmd = os.path.join(os.path.join(os.getcwd(), "scripts"), "cleanCollectorData.sh")
-            subprocess.call(remove_cmd) #TODO: Change this to not call external script
+    def delete_all(self): # , event):
+        # if self.show_confirmation_dialog("Are you sure you want to delete all collector data (this cannot be undone)?"):
+        remove_cmd = os.path.join(os.path.join(os.getcwd(), "scripts"), "cleanCollectorData.sh")
+        subprocess.call(remove_cmd) #TODO: Change this to not call external script
 
     def create_collector_bbox(self, collector):
         frame = gtk.Frame(collector.name)
