@@ -7,7 +7,6 @@ fi
 
 cd "${ECEL_HOME}"
 python start_stop_collectors.py &
-sleep 10
-kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7)
+sleep 15; kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7); echo "Finished collection/zipping." &
 python3 hailCesar.py
 exit 0
