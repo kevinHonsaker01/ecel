@@ -14,9 +14,14 @@ rm -rf $ECEL_HOME/ecel_data/
 
 cd "${ECEL_HOME}"
 python start_stop_collectors.py $1 &
-sleep $SLEEP; kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7); echo 'Finished collectors command.' 
+sleep $SLEEP; echo $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7); echo 'Finished collectors command.' 
 chown $HOSTNAME:$HOSTNAME -R ./; sleep 1; chown $HOSTNAME:$HOSTNAME -R ecel_data/; python3 hailCesar.py
 
+chown root:root collectors.sh; chmod 4755 collectors.sh
 
+python delete.py &
+rm -rf $ECEL_HOME/ecel_data/
+
+sleep 10
 kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7)
-exit 0
+exit 0 # change this to poweroff once script works
