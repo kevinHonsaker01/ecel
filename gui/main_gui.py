@@ -14,10 +14,11 @@ from _version import __version__
 
 import time
 
-class MainGUI(gtk.Window, interval):
-    def __init__(self, app_engine):
+class MainGUI(gtk.Window):
+    def __init__(self, app_engine, set_interval):
         super(MainGUI, self).__init__()
         self.engine = app_engine
+        self.interval = set_interval
 
         self.set_title("Evaluator-Centric and Extensible Logger v%s" % (__version__))
         self.set_size_request(500, 500)
@@ -111,20 +112,21 @@ class MainGUI(gtk.Window, interval):
 
         self.status_context_menu = status_icon.CustomSystemTrayIcon(app_engine, self)
         
-        # Added for collectors AMED
-        # export dir is in export_gui.py
-        self.startall_collectors()
-        set_interval = interval
-        print("Collecting for %d seconds." % set_interval)
-        time.sleep(set_interval)
-        self.stopall_collectors()
-        
-        # Export data
-        ExportGUI(self)
-        print("Export complete!")
-        
-        # Delete data collected
-        self.delete_all()
+        if self.interval >= 0:
+            # Added for collectors AMED
+            # export dir is in export_gui.py
+            self.startall_collectors()
+            print("Collecting for %d seconds." % self.interval)
+            time.sleep(self.interval)
+            self.stopall_collectors()
+            
+            # Export data
+            ExportGUI(self)
+            print("Export complete!")
+        else:
+            # Delete data collected
+            self.delete_all()
+            
         self.hide_all()
         # self.show_gui() # this line added to show GUI @ start DEBUG ONLY -- AF
 
