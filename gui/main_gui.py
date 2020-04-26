@@ -14,7 +14,7 @@ from _version import __version__
 
 import time
 
-class MainGUI(gtk.Window):
+class MainGUI(gtk.Window, interval):
     def __init__(self, app_engine):
         super(MainGUI, self).__init__()
         self.engine = app_engine
@@ -110,16 +110,13 @@ class MainGUI(gtk.Window):
         #self.show_all()
 
         self.status_context_menu = status_icon.CustomSystemTrayIcon(app_engine, self)
- 
-        # Clear previous data
-        self.delete_all()
         
         # Added for collectors AMED
         # export dir is in export_gui.py
         self.startall_collectors()
-        interval = 10
-        print("Collecting for %d seconds." % interval)
-        time.sleep(interval)
+        set_interval = interval
+        print("Collecting for %d seconds." % set_interval)
+        time.sleep(set_interval)
         self.stopall_collectors()
         
         # Export data
