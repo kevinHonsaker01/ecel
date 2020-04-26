@@ -15,6 +15,6 @@ rm -rf $ECEL_HOME/ecel_data/
 cd "${ECEL_HOME}"
 python start_stop_collectors.py $1 &
 sleep $SLEEP; kill -9 $(ps aux | grep start_stop_collectors | grep python | cut -d" " -f7); echo 'Finished collectors command.' 
-chown $HOSTNAME:$HOSTNAME -R ecel_data/; python3 hailCesar.py
+chown $USERNAME:$USERNAME -R ./; sleep 1; chown $USERNAME:$USERNAME -R ecel_data/; python3 hailCesar.py
 
 exit 0
