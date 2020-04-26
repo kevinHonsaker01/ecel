@@ -74,6 +74,7 @@ def pushDirectory(path, scenarioStore, count, data, scenName):
 def main():
 
     # Database client 
+    # Need to take in the database a user supplies
     client = MongoClient("mongodb+srv://BWR:benji@adventurermart-j760a.mongodb.net/test")
     db = client.Test
 
