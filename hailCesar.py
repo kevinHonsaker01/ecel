@@ -82,7 +82,7 @@ def main():
     
     # Get the user input credentials that were stored during Controller.py open screen
     db_credentials = ""
-    if "C:\\" in active_folder:
+    if "C:\\" in os.getcwd():
         print("Windows has no collectors")
         return
     else:
