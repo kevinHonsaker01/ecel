@@ -77,9 +77,8 @@ def main():
     ecel_home_folder = os.eviron['ECEL_HOME']
     cur_directory = os.getcwd()
     
-    # entering AMED home folder
+    # entering ECEL home folder
     os.chdir(ecel_home_folder)
-    os.chdir("..")
     
     # Get the user input credentials that were stored during Controller.py open screen
     db_credentials = ""
