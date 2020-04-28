@@ -74,7 +74,7 @@ def pushDirectory(path, scenarioStore, count, data, scenName):
 def main():
 
     # Get database configuration from database_configuration.txt
-    ecel_home_folder = os.eviron['ECEL_HOME']
+    ecel_home_folder = os.environ['ECEL_HOME']
     cur_directory = os.getcwd()
     
     # entering ECEL home folder
