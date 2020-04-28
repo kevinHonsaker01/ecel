@@ -8,7 +8,7 @@ fi
 
 # create master directory to hold all other directories -- root owned
 cd $ECEL_HOME
-if [ -f "ecel_data"]; then
+if [ -f "ecel_data" ]; then
 	echo "ecel_data folder exists."
 	rm -rf ecel_data
 	mkdir ecel_data
