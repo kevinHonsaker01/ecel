@@ -2,7 +2,7 @@
 
 # make script executable during ecel_install.sh
 
-if [ -z "$1" ]
+if [ -z "$1" ]; then
 	echo "Usage: ./standalone.sh <interval>"
 fi
 
