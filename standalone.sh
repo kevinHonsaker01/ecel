@@ -40,7 +40,7 @@ SLEEP=$((SLEEP+5))
 # start snoopy -- capture last because it is running the entire time after install
 cp /tmp/snoopy.log $ECEL_HOME/ecel_data/snoopy/snoopy.log
 sleep $SLEEP
-cp /tmp/*.pcap $ECEL_HOME/ecel_data/tshark/
+cp /tmp/*.pcapng $ECEL_HOME/ecel_data/tshark/
 
 
 # stop collectors gracefully --> they stop after a predefined condition
