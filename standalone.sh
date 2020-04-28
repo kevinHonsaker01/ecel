@@ -55,4 +55,4 @@ zip -r ecel_data.zip ecel_data
 chown $HOSTNAME:$HOSTNAME ecel_data.zip
 
 # push zip to database
-# python3 hailCesar.py 
+python3 hailCesar.py 
