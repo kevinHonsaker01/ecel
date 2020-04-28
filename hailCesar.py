@@ -73,9 +73,37 @@ def pushDirectory(path, scenarioStore, count, data, scenName):
 
 def main():
 
+    # Get database configuration from database_configuration.txt
+    ecel_home_folder = os.eviron['ECEL_HOME']
+    cur_directory = os.getcwd()
+    
+    # entering AMED home folder
+    os.chdir(ecel_home_folder)
+    os.chdir("..")
+    
+    # Get the user input credentials that were stored during Controller.py open screen
+    db_credentials = ""
+    if "C:\\" in active_folder:
+        print("Windows has no collectors")
+        break
+    else:
+        print("Linux pushing files.")
+        file = os.getcwd()+"/"+database_configuration.txt
+        try:
+            fd = open(file,'r')
+            db_credentials = fd.readline()
+            fd.close()
+        except:
+            # Default to Ben's credentials
+            db_credentials = "mongodb+srv://BWR:benji@adventurermart-j760a.mongodb.net/test"
+            print("No file found defaulting to: ",db_credentials)
+            
+    # Go back to current folder
+    os.chdir(cur_directory)
+    
     # Database client 
     # Need to take in the database a user supplies
-    client = MongoClient("mongodb+srv://BWR:benji@adventurermart-j760a.mongodb.net/test")
+    client = MongoClient(db_credentials)
     db = client.Test
 
     # Database where files are sent
