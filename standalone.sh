@@ -8,7 +8,7 @@ fi
 
 # create master directory to hold all other directories -- root owned
 cd $ECEL_HOME
-if [ -f "ecel_data" ]; then
+if [ -f "ecel_data"]; then
 	echo "ecel_data folder exists."
 	rm -rf ecel_data
 	mkdir ecel_data
@@ -23,6 +23,9 @@ else
 fi
 
 # start tshark; file output
+cd /tmp
+rm -rf *.pcapng
+cd $ECEL_HOME
 dumpcap -i $(ifconfig | grep 1500 | cut -d":" -f1) -a duration:$1 &
 SLEEP=$1
 SLEEP=$((SLEEP+5))
@@ -37,7 +40,8 @@ SLEEP=$((SLEEP+5))
 # start snoopy -- capture last because it is running the entire time after install
 cp /tmp/snoopy.log $ECEL_HOME/ecel_data/snoopy/snoopy.log
 sleep $SLEEP
-cp /tmp/$(ls -l /tmp | grep wireshark | cut -d" " -f14) ecel_data/tshark/
+cp /tmp/*.pcap $ECEL_HOME/ecel_data/tshark/
+
 
 # stop collectors gracefully --> they stop after a predefined condition
 
@@ -51,4 +55,4 @@ zip -r ecel_data.zip ecel_data
 chown $HOSTNAME:$HOSTNAME ecel_data.zip
 
 # push zip to database
-python3 hailCesar.py 
+# python3 hailCesar.py 
