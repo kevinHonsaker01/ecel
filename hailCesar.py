@@ -87,10 +87,11 @@ def main():
         return
     else:
         print("Linux pushing files.")
-        file = os.getcwd()+"/"+database_configuration.txt
+        file = os.getcwd()+"/"+"database_configuration.txt"
         try:
             fd = open(file,'r')
             db_credentials = fd.readline()
+            db_credentials = db_credentials[:-1]
             fd.close()
         except:
             # Default to Ben's credentials
