@@ -84,7 +84,7 @@ def main():
     db_credentials = ""
     if "C:\\" in active_folder:
         print("Windows has no collectors")
-        break
+        return
     else:
         print("Linux pushing files.")
         file = os.getcwd()+"/"+database_configuration.txt
