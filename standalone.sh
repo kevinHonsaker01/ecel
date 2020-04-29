@@ -8,19 +8,13 @@ fi
 
 # create master directory to hold all other directories -- root owned
 cd $ECEL_HOME
-if [ -f "ecel_data" ]; then
-	echo "ecel_data folder exists."
-	rm -rf ecel_data
-	mkdir ecel_data
-	mkdir ecel_data/snoopy
-	mkdir ecel_data/pykeylogger
-	mkdir ecel_data/tshark
-else
-	mkdir ecel_data
-	mkdir ecel_data/snoopy
-	mkdir ecel_data/pykeylogger
-	mkdir ecel_data/tshark
-fi
+
+echo "ecel_data folder exists."
+rm -rf ecel_data
+mkdir ecel_data
+mkdir ecel_data/snoopy
+mkdir ecel_data/pykeylogger
+mkdir ecel_data/tshark
 
 # start tshark; file output
 cd /tmp
