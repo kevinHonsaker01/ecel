@@ -20,7 +20,7 @@ mkdir ecel_data/tshark
 cd /tmp
 rm -rf *.pcapng
 cd $ECEL_HOME
-dumpcap -i $(ifconfig | grep 1500 | cut -d":" -f1) -a duration:$1 &
+dumpcap -i $(nmcli device status | grep ethernet | cut -d" " -f1) -a duration:$1 &
 SLEEP=$1
 SLEEP=$((SLEEP+5))
 
